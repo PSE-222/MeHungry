@@ -1,6 +1,6 @@
 const db_object = require('../db/config');
 
-const db_connection = db_object.getDb()
+const collection = db_object.getDb().collection("Menu")
 
 exports.add_item = async (req,res) =>{
 
