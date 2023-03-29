@@ -1,4 +1,5 @@
-//What if item name not in menu?
+// What if item name not in menu?
+// What if food is not available?
 // Should change collection to order_collection? (same in table-controller)
 const db_object = require('../db/config');
 
