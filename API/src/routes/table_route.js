@@ -10,6 +10,6 @@ router.get("/change-status/:id", table_controller.change_status_table);
 
 router.get("/table/:id", table_controller.view_info_table);
 
-router.get("/tables", table_controller.view_all_tables);
+router.get("/tables", table_controller.view_all_table);
 
 module.exports = router;

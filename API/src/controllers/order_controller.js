@@ -8,7 +8,8 @@ const collection = db_object.getDb().collection("Order")
 
 
 exports.view_order = async (req,res) => {
-	const order_info = await collection.findOne({order_id: req.params.id});
+	const order_id = Number(req.params.id);
+	const order_info = await collection.findOne({order_id: order_id});
 	res.send(order_info)
 };
 

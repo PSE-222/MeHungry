@@ -1,0 +1,23 @@
+GET http://localhost:1500/api/menu
+
+################################
+
+GET http://localhost:1500/api/view-order/2
+
+################################
+GET http://localhost:1500/api/assign-table/2/ab
+
+################################
+
+GET http://localhost:1500/api/assign-table/2/bc
+
+################################
+GET http://localhost:1500/api/change-status/2
+
+################################
+GET http://localhost:1500/api/table/1
+
+################################
+GET http://localhost:1500/api/table/2
+################################
+GET http://localhost:1500/api/tables
