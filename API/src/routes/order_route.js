@@ -9,6 +9,7 @@ router.get("/view-order/:id", order_controller.view_order);
 router.post("/add-items/:id", order_controller.add_item_to_order);
 
 router.get("/orders", order_controller.view_orders)
-// router.get("/tables", table_controller.view_all_tables);
+
+router.post("/finish-order/:id", order_controller.finish_order);
 
 module.exports = router;

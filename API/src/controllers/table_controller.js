@@ -12,7 +12,6 @@ async function create_order (table_number){
 };
 
 exports.assign_table = async (req,res) =>{
-	const table_number = Number(req.params.number)
 	const table_info = await table_collection.findOne({table_number: table_number,});
 
 	if (!table_info["is_occupied"] ){
@@ -31,7 +30,6 @@ exports.assign_table = async (req,res) =>{
 };
 
 exports.change_status_table = async (req,res) => {
-	const table_number = Number(req.params.number);
 	const table_info = await table_collection.findOne({table_number: table_number});
 	const table_status = table_info["is_occupied"];
 	// const table_number = table_info["table_number"]
