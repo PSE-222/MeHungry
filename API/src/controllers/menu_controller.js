@@ -1,27 +1,28 @@
 // Add id field to food item
+// What happened if item not exist?
 const db_object = require('../db/config');
 
-const collection = db_object.getDb().collection("Menu")
+const menu_collection = db_object.getDb().collection("Menu")
 
 exports.add_item = async (req,res) =>{
 	item_info = req.body;
-	await collection.insertOne(item_info);
-	res.send(`Add Item ${item_info.item_name} Successfully!!!`);
+	await menu_collection.insertOne(item_info);
+	res.send({msg: `Add Item ${item_info.item_name} Successfully!!!`});
 };
 
 exports.update_item = async (req,res) => {
 	item_info = req.body;
-	await collection.updateOne({item_name: item_info.item_name},{$set: item_info});
-	res.send(`Update Item ${item_info.item_name} Successfully!!!`);
+	await menu_collection.updateOne({item_name: item_info.item_name},{$set: item_info});
+	res.send({msg: `Update Item ${item_info.item_name} Successfully!!!`});
 
 };
 
 exports.delete_item = async (req,res) => {
-	await collection.deleteOne({item_name: req.params.id});
-	res.send("Delete item successfully");
+	await menu_collection.deleteOne({item_name: req.params.id});
+	res.send({msg: `Delete Item successfully`});
 };
 
 exports.view_menu = async (req,res) => {
-	const menu = await collection.find({}).toArray();
+	const menu = await menu_collection.find({}).toArray();
 	res.send(menu);
 };

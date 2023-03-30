@@ -4,9 +4,9 @@ const table_controller = require("../controllers/table_controller");
 
 const router = express.Router();
 
-router.get("/assign-table/:id/:name", table_controller.assign_table);
+router.post("/assign-table/:number/:name", table_controller.assign_table);
 
-router.get("/change-status/:id", table_controller.change_status_table);
+router.get("/change-status/:number", table_controller.change_status_table);
 
 router.get("/table/:id", table_controller.view_info_table);
 
