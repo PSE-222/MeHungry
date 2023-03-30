@@ -8,6 +8,7 @@ async function create_order (table_number){
 	const order_collection = db_object.getDb().collection("Order");
 	const new_order_id = (await table_collection.countDocuments({})) + 1;
 	await order_collection.insertOne({order_id: new_order_id,table_number: table_number, item_name : [], quantity : [], price : 0.0})
+	return new_order_id;
 };
 
 exports.assign_table = async (req,res) =>{
@@ -22,11 +23,11 @@ exports.assign_table = async (req,res) =>{
 		res.send({msg: "Table Is Being Occupied!!!"});
 		return;
 	}
-	await create_order(table_number)
+	const order_id = await create_order(table_number);
 	await table_collection.updateOne({table_number: table_number},{$set:{customer_name:req.params.name,},});
 	
 	const new_table_info = await table_collection.findOne({table_number: table_number},);
-	return res.send(new_table_info)
+	return res.send(Object.assign({},new_table_info,{order_id: order_id}))
 };
 
 exports.change_status_table = async (req,res) => {

@@ -5,6 +5,9 @@ GET http://localhost:1500/api/menu
 GET http://localhost:1500/api/view-order/2
 
 ################################
+GET http://localhost:1500/api/orders
+
+################################
 POST http://localhost:1500/api/assign-table/1/ab
 
 ################################
@@ -15,7 +18,7 @@ GET http://localhost:1500/api/assign-table/2/bc
 GET http://localhost:1500/api/change-status/1
 
 ################################
-GET http://localhost:1500/api/table/1
+GET http://localhost:1500/api/table/1qAKpsUL
 
 ################################
 GET http://localhost:1500/api/table/2

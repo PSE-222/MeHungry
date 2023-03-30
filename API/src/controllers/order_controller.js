@@ -29,5 +29,9 @@ exports.add_item_to_order = async (req,res) => {
 	res.send({msg:"Update Order Successfully!!!"});
 };
 
+exports.view_orders = async (req,res) => {
+	const all_orders_info = await order_collection.find({}).toArray();
+	res.send(all_orders_info);
+};
 // exports.finish_order = async (req,res) => {
 // };
