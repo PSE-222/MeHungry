@@ -3,6 +3,7 @@
 // [x] Should change collection to order_collection? (same in table-controller)
 // Add status to order
 // Calculate total price (get from FE or double check)
+// View order return list of price
 const db_object = require('../db/config');
 
 const order_collection = db_object.getDb().collection("Order")
