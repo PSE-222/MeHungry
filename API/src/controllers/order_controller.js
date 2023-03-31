@@ -19,13 +19,14 @@ exports.add_item_to_order = async (req,res) => {
 	list_of_item = req.body;
 	list_name = [];
 	list_quantity = [];
-
+	list_price = [];
 	for (item in list_of_item){
 		list_name.append(item["Name"]);
 		list_quantity.append(item["Quantity"]);
+		list_price.append(parseFloat(item["Price"]));
 	}
 
-	await order_collection.updateOne({order_id: req.params.id},{$set: {item_name: list_name, quantity: list_quantity,},});
+	await order_collection.updateOne({order_id: req.params.id},{$set: {item_name: list_name, quantity: list_quantity, price: list_price},});
 	res.send({msg:"Update Order Successfully!!!"});
 };
 
@@ -49,4 +50,9 @@ exports.finish_order = async (req,res) => {
 	await order_collection.updateOne({order_id: req.params.id},{$set: {status: "finished",},});
 	res.send({msg: `Order ${req.params.id} is billed.`});
 	
+};
+
+exports.view_current_orders = async (req,res) => {
+	const ongoing_order = await order_collection.find({status: "ongoing"}).toArray();
+	res.send(ongoing_order);
 };

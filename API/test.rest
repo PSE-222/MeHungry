@@ -8,6 +8,9 @@ GET http://localhost:1500/api/view-order/2
 GET http://localhost:1500/api/orders
 
 ################################
+GET http://localhost:1500/api/view-current-orders
+
+################################
 POST http://localhost:1500/api/assign-table/1/ab
 
 ################################

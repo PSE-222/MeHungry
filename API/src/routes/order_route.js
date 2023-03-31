@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get("/view-order/:id", order_controller.view_order);
 
+router.get("/view-current-orders", order_controller.view_current_orders);
+
 router.post("/add-items/:id", order_controller.add_item_to_order);
 
 router.get("/orders", order_controller.view_orders)

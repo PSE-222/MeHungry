@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/assign-table/:number/:name", table_controller.assign_table);
 
-router.get("/change-status/:number", table_controller.change_status_table);
+router.post("/change-status/:number", table_controller.change_status_table);
 
 router.get("/table/:id", table_controller.view_info_table);
 

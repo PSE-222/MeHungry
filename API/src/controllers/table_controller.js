@@ -46,6 +46,9 @@ exports.change_status_table = async (req,res) => {
 
 exports.view_info_table = async (req,res) => {
 	const table_info = await table_collection.findOne({table_id: req.params.id,});
+	if (!table_info){
+		res.status(404)
+	}
 	res.send(table_info);
 };
 
