@@ -17,6 +17,7 @@ app.use(body_parser.json());
 app.use("/api", table_router);
 app.use("/api", order_router);
 app.use("/api", menu_router);
+app.use("/api", payment_router);
 // app.use("/api", admin_router);
 
 module.exports = app;
