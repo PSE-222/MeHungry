@@ -7,6 +7,7 @@ require("dotenv").config()
 const table_router = require("./src/routes/table_route");
 const order_router = require("./src/routes/order_route");
 const menu_router = require("./src/routes/menu_route");
+const payment_router = require("./src/routes/payment_route");
 // const admin_router = require("./src/routes/admin_route");
 
 app.use(express.json());

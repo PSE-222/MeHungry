@@ -11,7 +11,7 @@ GET http://localhost:1500/api/orders
 GET http://localhost:1500/api/view-current-orders
 
 ################################
-POST http://localhost:1500/api/finish-order/1
+POST http://localhost:1500/api/finish-order/3
 
 ################################
 POST http://localhost:1500/api/assign-table/1/ab

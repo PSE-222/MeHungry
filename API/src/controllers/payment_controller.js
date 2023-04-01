@@ -1,4 +1,4 @@
-//Payment document: id (same with order_id), status, method, created_time, finished_time, tip, total price
+// [x] Payment document: id (same with order_id), status, method, created_time, finished_time, tip, total price
 const db_object = require('../db/config');
 
 const payment_collection = db_object.getDb().collection("Payment")
