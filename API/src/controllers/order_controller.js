@@ -3,17 +3,15 @@
 // [x] Should change collection to order_collection? (same in table-controller)
 // Add status to order
 // Calculate total price (get from FE or double check)
-// View order return list of price
+// [x] View order return list of price
 const db_object = require('../db/config');
 
 const order_collection = db_object.getDb().collection("Order")
 
-
-
-exports.view_order = async (req,res) => {
-	const order_info = await order_collection.findOne({order_id: req.params.id});
-	res.send(order_info)
-};
+exports.create_order = async (order_id, table_number) => {
+	await order_collection.insertOne({order_id: order_id, table_number: table_number, item_name : [], quantity : [], price : []})
+	return true;
+}
 
 exports.add_item_to_order = async (req,res) => {
 	
@@ -29,6 +27,21 @@ exports.add_item_to_order = async (req,res) => {
 
 	await order_collection.updateOne({order_id: req.params.id},{$set: {item_name: list_name, quantity: list_quantity, price: list_price},});
 	res.send({msg:"Update Order Successfully!!!"});
+};
+
+exports.count_order = async () =>{
+	const num_of_order = await order_collection.countDocuments({});
+	return num_of_order;
+}
+
+exports.view_order = async (req,res) => {
+	const order_info = await order_collection.findOne({order_id: req.params.id});
+	res.send(order_info)
+};
+
+exports.view_current_orders = async (req,res) => {
+	const ongoing_order = await order_collection.find({status: "ongoing"}).toArray();
+	res.send(ongoing_order);
 };
 
 exports.view_orders = async (req,res) => {
@@ -53,7 +66,3 @@ exports.finish_order = async (req,res) => {
 	
 };
 
-exports.view_current_orders = async (req,res) => {
-	const ongoing_order = await order_collection.find({status: "ongoing"}).toArray();
-	res.send(ongoing_order);
-};
