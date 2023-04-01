@@ -4,22 +4,48 @@ const db_object = require('../db/config');
 const payment_collection = db_object.getDb().collection("Payment")
 
 exports.create_payment = async (order_id) => {
-	await payment_collection.insertOne({payment_id: order_id, status: "processing", method: "cash", created_time: "", finished_time: "", tip: 0.0, total: 0.0})
+	await payment_collection.insertOne({_id: order_id, status: "processing", method: "cash", created_time: "", finished_time: "", tip: 0.0, total: 0.0})
 	return true;
 }
 
 exports.request_payment = async (req,res) => {
-	await payment_collection.updateOne({payment_id: req.params.id},{$set: {status: "requested"},});
+	const payment_id = req.params.id;
+	console.log(payment_id);
+	const payment_info = await payment_collection.findOne({id: payment_id});
+	if (!payment_info){
+		res.status(404).send({msg: "Payment Not Existed!"});
+		return;
+	}
+
+	if (payment_info["status"] != "processing"){
+		res.send({msg: "Invalid Operation!"});
+		return;
+	}
+	await payment_collection.updateOne({id: payment_id},{$set: {status: "requested"},});
 	res.send({msg:"Waiting For The Bill!!!"});
 };
 
 exports.finish_payment = async (req,res) => {
-	await payment_collection.updateOne({payment_id: req.params.id},{$set: {status: "done"},});
+	const payment_id = req.params.id;
+	const payment_info = await payment_collection.findOne({id: payment_id});
+	
+	if (!payment_info){
+		res.status(404).send({msg: "Payment Not Existed!"});
+		return;
+	}
+
+	if (payment_info["status"] != "requested"){
+		res.send({msg: "Invalid Operation!"});
+		return;
+	}
+
+	const payment_details = Object.assign({}, req.body, {status: "done"});
+	await payment_collection.updateOne({id: payment_id},{$set: payment_details,});
 	res.send({msg:"Payment is done!!!"});
 };
 
 exports.view_payment = async (req,res) => {
-	const payment_info = await payment_collection.findOne({payment_id: req.params.id});
+	const payment_info = await payment_collection.findOne({id: req.params.id});
 	if (!payment_info){
 		res.status(404).send({msg: "Payment Not Existed!"});
 		return;
@@ -28,7 +54,7 @@ exports.view_payment = async (req,res) => {
 };
 
 exports.view_all_payments = async (req,res) => {
-	const all_payment_info = await payment_collection.findOne({});
+	const all_payment_info = await payment_collection.find({}).toArray();
 	res.send(all_payment_info);
 };
 
