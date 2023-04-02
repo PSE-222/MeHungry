@@ -5,7 +5,6 @@
 // Calculate total price (get from FE or double check)
 // [x] View order return list of price
 const db_object = require('../db/config');
-
 const order_collection = db_object.getDb().collection("Order")
 
 exports.create_order = async (order_id, table_number) => {
@@ -14,15 +13,22 @@ exports.create_order = async (order_id, table_number) => {
 }
 
 exports.add_item_to_order = async (req,res) => {
-	
-	list_of_item = req.body;
-	list_name = [];
-	list_quantity = [];
-	list_price = [];
+	const current_order_info = await order_collection.findOne({order_id: req.params.id});
+	let list_item = current_order_info["item_name"];
+	let list_quantity = current_order_info["quantity"];
+	let list_price = current_order_info["price"];
+
+	const list_of_item = req.body;
 	for (item in list_of_item){
-		list_name.append(item["Name"]);
-		list_quantity.append(item["Quantity"]);
-		list_price.append(parseFloat(item["Price"]));
+		index = list_item.indexOf(item["Name"]);
+
+		if (index == -1){
+			list_item.append(item["Name"]);
+			list_quantity.append(item["Quantity"]);
+			list_price.append(item["Price"]);
+			continue;
+		}
+		list_quantity[index] += item["Quantity"];
 	}
 
 	await order_collection.updateOne({order_id: req.params.id},{$set: {item_name: list_name, quantity: list_quantity, price: list_price},});
