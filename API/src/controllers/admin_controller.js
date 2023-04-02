@@ -3,13 +3,19 @@
 const db_object = require('../db/config');
 const manager_collection = db_object.getDb().collection("Manager");
 
+require("dotenv").config();
+let refreshTokens = [];
 
+const generateToken = (user) => {
+	return jwt.sign(user, process.env.ACCESS_KEY, {
+	  expiresIn: 60 * 600,
+	});
+  };
 
 exports.login = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  // should handle in frontend
   if (!username || !password) {
     return res
       .status(401)
@@ -17,8 +23,12 @@ exports.login = async (req, res) => {
   }
 
   const user = await manager_collection.findOne({ "username": username });
-  const hash_passwd = bcrypt.hash(password,10);
-  const is_pass_valid = await bcrypt.compare( hash_passwd, user["password"]);
+
+  if (!user) {
+    return res.status(404).send({ msg: "User not found" });
+  }
+  const hash_passwd = bcrypt.hash(password, 10);
+  const is_pass_valid = await bcrypt.compare(hash_passwd, user["password"]);
 
   if (!is_pass_valid) {
     return res
@@ -26,42 +36,50 @@ exports.login = async (req, res) => {
       .send({ msg: "Invalid Username Or Password!!!" });
   }
 
-  res.status(200).send({logged_in:true, msg: "Login Successfully"});
+  const access_token = generateToken({ user_id: user["id"], role: user["role"] });
+
+  const refresh_token = jwt.sign({ user: user["id"], role: user["role"] },process.env.REFRESH_KEY);
+
+  refreshTokens.push(refresh_token);
+  console.log({ refreshTokens });
+
+  return res.send({ access_token, refreshToken: refresh_token });
 };
 
-// exports.logout = async (req, res) => {
-//   refreshTokens = refreshTokens.filter(
-//     (token) => token !== req.body.refreshToken
-//   );
-//   console.log("refreshTokens array after filtering: ", refreshTokens);
 
-//   return res.status(204).send({ msg: "Logout Successfully!!!" });
-// };
+exports.logout = async (req, res) => {
+  refreshTokens = refreshTokens.filter(
+    (token) => token != req.body.refreshToken
+  );
+  console.log("refreshTokens array after filtering: ", refreshTokens);
 
-// exports.generate_access_token = async (req, res) => {
-//   const refreshToken = req.body.refreshToken;
+  return res.status(204).send({ msg: "Logout Successfully!!!" });
+};
 
-//   if (!refreshToken) {
-//     return res.status(401).send({ msg: "Missing Token" });
-//   }
+exports.generate_new_access_token = async (req, res) => {
+  const refresh_token = req.body.refreshToken;
 
-//   if (!refreshTokens.includes(refreshToken)) {
-//     return res.status(403).send({ msg: "No Permission" });
-//   }
+  if (!refresh_token) {
+    return res.status(401).send({ msg: "Missing Token" });
+  }
 
-//   let tokenUser;
+  if (!refreshTokens.includes(refresh_token)) {
+    return res.status(403).send({ msg: "No Permission" });
+  }
 
-//   jwt.verify(refreshToken, process.env.REFRESH_KEY, (err, user) => {
-//     if (err) {
-//       return res.status(403).send({ msg: "No permission" });
-//     }
-//     console.log(user);
+  let token_user;
 
-//     tokenUser = user;
-//   });
+  jwt.verify(refresh_token, process.env.REFRESH_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).send({ msg: "No permission" });
+    }
+    console.log(user);
 
-//   const accessToken = generate_token({ userID: tokenUser.userId, Role: "BO" });
-//   console.log("new accessToken: ", accessToken);
+    token_user = user;
+  });
 
-//   return res.send({ accessToken });
-// };
+  const access_token = generate_token({ user_id: token_user["user_id"], role: token_user["role"] });
+  console.log("new access token: ", access_token);
+
+  return res.send({ access_token });
+};

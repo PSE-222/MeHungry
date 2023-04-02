@@ -39,4 +39,7 @@ GET http://localhost:1500/api/view-payment/1
 GET http://localhost:1500/api/payments
 
 ###
-POST http://localhost:1500/api/request-payment/2
+POST http://localhost:1500/api/request-payment/3
+
+###
+POST http://localhost:1500/api/finish-payment/2
