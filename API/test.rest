@@ -37,7 +37,7 @@ GET http://localhost:1500/api/view-payment/1
 
 ###
 GET http://localhost:1500/api/payments
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDQ0MDQ3MCwiZXhwIjoxNjgwNDc2NDcwfQ.iWlZ9tzZTjgffx-RL9fnSvHPuBp0ii7RzgszRjQGNuQ
 ###
 POST http://localhost:1500/api/request-payment/3
 
@@ -53,3 +53,16 @@ Content-Type: application/json
 	"password": "password"
 }
 ###
+DELETE http://localhost:1500/api/logout
+Content-Type: application/json
+
+{
+	"refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDQ0MDc1N30.NuzLmPCsy3KmXKi7zBmSjvLG05Fx1Ov4Hfra4_Zgi3g"
+}
+###
+POST http://localhost:1500/api/get-access-token
+Content-Type: application/json
+
+{
+	"refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDQ0MDc1N30.NuzLmPCsy3KmXKi7zBmSjvLG05Fx1Ov4Hfra4_Zgi3g"
+}

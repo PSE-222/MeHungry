@@ -8,7 +8,7 @@ require("dotenv").config();
 
 let refreshTokens = [];
 
-const generateToken = (user) => {
+const generate_token = (user) => {
     return jwt.sign(user, process.env.SECRET_KEY, {
     expiresIn: 60 * 600,
     });
@@ -38,7 +38,7 @@ exports.login = async (req, res) => {
         .send({ msg: "Invalid Username Or Password!!!" });
     }
 
-    const access_token = generateToken({ user_id: user["id"], role: user["role"] });
+    const access_token = generate_token({ user_id: user["id"], role: user["role"] });
 
     const refresh_token = jwt.sign({ user: user["id"], role: user["role"] },process.env.REFRESH_KEY);
 

@@ -6,6 +6,6 @@ router.post("/login", admin_controller.login);
 
 router.delete("/logout", admin_controller.logout);
 
-router.post("/generate-access-token", admin_controller.generate_new_access_token);
+router.post("/get-access-token", admin_controller.generate_new_access_token);
 
 module.exports = router;
