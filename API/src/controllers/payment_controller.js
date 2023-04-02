@@ -10,7 +10,6 @@ exports.create_payment = async (order_id) => {
 
 exports.request_payment = async (req,res) => {
 	const payment_id = req.params.id;
-	console.log(payment_id);
 	const payment_info = await payment_collection.findOne({id: payment_id});
 	if (!payment_info){
 		res.status(404).send({msg: "Payment Not Existed!"});
