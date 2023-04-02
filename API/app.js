@@ -10,10 +10,10 @@ const menu_router = require("./src/routes/menu_route");
 const payment_router = require("./src/routes/payment_route");
 const admin_router = require("./src/routes/admin_route");
 
+app.use(cors());
 app.use(express.json());
 app.use(body_parser.json());
 
-app.use(cors());
 app.use("/api", table_router);
 app.use("/api", order_router);
 app.use("/api", menu_router);
