@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post("/login", admin_controller.login);
 
-router.delete("/logout", admin_controller.logout);
+router.post("/logout", admin_controller.logout);
 
 router.post("/get-access-token", admin_controller.generate_new_access_token);
 

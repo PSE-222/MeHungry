@@ -4,7 +4,7 @@ const { auth } = require("../helper/auth");
 
 const router = express.Router();
 
-router.get("/view-order/:id", auth, order_controller.view_order);
+router.get("/view-order/:id", order_controller.view_order);
 
 router.get("/view-current-orders", auth, order_controller.view_current_orders);
 

@@ -29,8 +29,6 @@ exports.login = async (req, res) => {
         return res.status(404).send({ msg: "User not found" });
     }
     const hash_passwd = createHash('sha256').update(password).digest('hex');
-    console.log(hash_passwd);
-    console.log(user["password"]);
     const is_pass_valid = hash_passwd == user["password"]
     if (!is_pass_valid) {
         return res
@@ -50,12 +48,9 @@ exports.login = async (req, res) => {
 
 
 exports.logout = async (req, res) => {
-    refreshTokens = refreshTokens.filter(
-        (token) => token !== req.body.refreshToken
-    );
-    console.log("refreshTokens array after filtering: ", refreshTokens);
-
-    return res.status(204).send({ msg: "Logout Successfully!!!" });
+    refreshTokens = refreshTokens.filter((token) => token !== req.body.refreshToken);
+    // console.log("refreshTokens array after filtering: ", refreshTokens);
+    res.status(200).send({ msg: "Logout Successfully!!!" });
 };
 
 exports.generate_new_access_token = async (req, res) => {

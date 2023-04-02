@@ -1,10 +1,11 @@
 // [x] Payment document: id (same with order_id), status, method, created_time, finished_time, tip, total price
+// Return total price for request_payment
 const db_object = require('../db/config');
 
 const payment_collection = db_object.getDb().collection("Payment")
 
 exports.create_payment = async (order_id) => {
-	await payment_collection.insertOne({_id: order_id, status: "processing", method: "cash", created_time: "", finished_time: "", tip: 0.0, total: 0.0})
+	await payment_collection.insertOne({id: order_id, status: "processing", method: "cash", created_time: "", finished_time: "", tip: 0.0, total: 0.0})
 	return true;
 }
 
@@ -21,6 +22,7 @@ exports.request_payment = async (req,res) => {
 		return;
 	}
 	await payment_collection.updateOne({id: payment_id},{$set: {status: "requested"},});
+	
 	res.send({msg:"Waiting For The Bill!!!"});
 };
 
