@@ -1,14 +1,15 @@
 // What if item name not in menu? (No way)
 // What if food is not available? (FE)
 // [x] Should change collection to order_collection? (same in table-controller)
-// Add status to order
+// [ ] Add status to order
 // Calculate total price (get from FE or double check)
 // [x] View order return list of price
+// [ ] Finish order include change status (4 to 0)
 const db_object = require('../db/config');
 const order_collection = db_object.getDb().collection("Order")
 
 exports.create_order = async (order_id, table_number) => {
-	await order_collection.insertOne({order_id: order_id, table_number: table_number, item_name : [], quantity : [], price : []})
+	await order_collection.insertOne({order_id: order_id, table_number: table_number, item_name : [], quantity : [], price : [], ordered_time: "",status: "ongoing"})
 	return true;
 }
 
