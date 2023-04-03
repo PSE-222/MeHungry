@@ -9,22 +9,22 @@ exports.create_payment = async (order_id) => {
 	return true;
 }
 
-exports.request_payment = async (req,res) => {
-	const payment_id = req.params.id;
-	const payment_info = await payment_collection.findOne({id: payment_id});
-	if (!payment_info){
-		res.status(404).send({msg: "Payment Not Existed!"});
-		return;
-	}
+// exports.request_payment = async (req,res) => {
+// 	const payment_id = req.params.id;
+// 	const payment_info = await payment_collection.findOne({id: payment_id});
+// 	if (!payment_info){
+// 		res.status(404).send({msg: "Payment Not Existed!"});
+// 		return;
+// 	}
 
-	if (payment_info["status"] != "processing"){
-		res.send({msg: "Invalid Operation!"});
-		return;
-	}
-	await payment_collection.updateOne({id: payment_id},{$set: {status: "requested"},});
+// 	if (payment_info["status"] != "processing"){
+// 		res.send({msg: "Invalid Operation!"});
+// 		return;
+// 	}
+// 	await payment_collection.updateOne({id: payment_id},{$set: {status: "requested"},});
 	
-	res.send({msg:"Waiting For The Bill!!!"});
-};
+// 	res.send({msg:"Waiting For The Bill!!!"});
+// };
 
 exports.finish_payment = async (req,res) => {
 	const payment_id = req.params.id;
@@ -35,7 +35,7 @@ exports.finish_payment = async (req,res) => {
 		return;
 	}
 
-	if (payment_info["status"] != "requested"){
+	if (payment_info["status"] != "processing"){
 		res.send({msg: "Invalid Operation!"});
 		return;
 	}

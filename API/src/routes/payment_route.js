@@ -4,7 +4,7 @@ const { auth } = require("../helper/auth");
 
 const router = express.Router();
 
-router.post("/request-payment/:id", payment_controller.request_payment);
+// router.post("/request-payment/:id", payment_controller.request_payment);
 
 router.post("/finish-payment/:id", auth, payment_controller.finish_payment);
 

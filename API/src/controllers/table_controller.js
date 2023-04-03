@@ -14,7 +14,6 @@ async function create_order_and_payment (table_number){
 	const new_order_id = (await count_order() + 1).toString();
 	await create_order(new_order_id, table_number);
 	await create_payment(new_order_id);
-	return new_order_id;
 };
 exports.request_table = async (req,res) =>{
 	const table_id = req.params.id;
