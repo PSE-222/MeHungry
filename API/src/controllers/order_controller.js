@@ -5,6 +5,7 @@
 // Calculate total price (get from FE or double check)
 // [x] View order return list of price
 // [ ] Finish order include change status (4 to 0)
+// [ ] Add name and check name for table
 const db_object = require('../db/config');
 const order_collection = db_object.getDb().collection("Order")
 
@@ -14,26 +15,38 @@ exports.create_order = async (order_id, table_number) => {
 }
 
 exports.add_item_to_order = async (req,res) => {
-	const current_order_info = await order_collection.findOne({order_id: req.params.id});
-	let list_item = current_order_info["item_name"];
-	let list_quantity = current_order_info["quantity"];
-	let list_price = current_order_info["price"];
+	// let list_item = current_order_info["item_name"];
+	// let list_quantity = current_order_info["quantity"];
+	// let list_price = current_order_info["price"];
 
-	const list_of_item = req.body;
+	// const list_of_item = req.body;
+	// for (item in list_of_item){
+	// 	index = list_item.indexOf(item["Name"]);
+
+	// 	if (index == -1){
+	// 		list_item.append(item["Name"]);
+	// 		list_quantity.append(item["Quantity"]);
+	// 		list_price.append(item["Price"]);
+	// 		continue;
+	// 	}
+	// 	list_quantity[index] += item["Quantity"];
+	// }
+	const current_order_info = await order_collection.findOne({table_number: req.params.id, status: "ongoing"});
+	if (!current_order_info){
+		return res.send({ msg: "Order Not Existed!!"});
+	}
+	list_of_item = req.body;
+	list_name = [];
+	list_quantity = [];
+	list_price = [];
 	for (item in list_of_item){
-		index = list_item.indexOf(item["Name"]);
-
-		if (index == -1){
-			list_item.append(item["Name"]);
-			list_quantity.append(item["Quantity"]);
-			list_price.append(item["Price"]);
-			continue;
-		}
-		list_quantity[index] += item["Quantity"];
+		list_name.append(item["Name"]);
+		list_quantity.append(item["Quantity"]);
+		list_price.append(parseFloat(item["Price"]));
 	}
 
-	await order_collection.updateOne({order_id: req.params.id},{$set: {item_name: list_name, quantity: list_quantity, price: list_price},});
-	res.send({msg:"Update Order Successfully!!!"});
+	await order_collection.updateOne({table_number: req.params.id, status: "ongoing"},{$set: {item_name: list_name, quantity: list_quantity, price: list_price},});
+	res.send({msg: `Update Order of Table ${req.params.id} Successfully!!!`});
 };
 
 exports.count_order = async () =>{
