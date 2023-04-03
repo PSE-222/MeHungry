@@ -5,7 +5,7 @@ const db_object = require('../db/config');
 const menu_collection = db_object.getDb().collection("Menu")
 
 async function random_id(){
-	const list = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 	var result = '';
     for (var i = 6; i > 0; --i)
 		result += chars[Math.floor(Math.random() * 62)];

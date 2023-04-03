@@ -1,6 +1,18 @@
 #################MENU##############
 GET http://localhost:1500/api/menu
 
+###
+POST http://localhost:1500/api/add-item
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDUyNDMxOCwiZXhwIjoxNjgwNTYwMzE4fQ.Vk0TT3xEs5KH-MlN7rC2SXIDfn80UBe1CdC2jmCa0QU
+Content-Type: application/json
+
+{
+    "item_name": "Nuoc dua",
+    "description": "Nuoc dua thom ngon",
+    "price": 12.99,
+    "is_available": true,
+    "category": "drink"
+}
 ##################ORDER##############
 
 GET http://localhost:1500/api/view-order/2
