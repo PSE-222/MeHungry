@@ -36,16 +36,18 @@ exports.add_item_to_order = async (req,res) => {
 		return res.send({ msg: "Order Not Existed!!"});
 	}
 	list_of_item = req.body;
-	list_name = [];
-	list_quantity = [];
-	list_price = [];
-	for (item in list_of_item){
+
+	let list_name = [],	list_quantity = [],	list_price = [];
+
+	for (i = 0; i < list_of_item.length; i++) {
+		item = list_of_item[i];
 		list_name.push(item["Name"]);
 		list_quantity.push(item["Quantity"]);
 		list_price.push(parseFloat(item["Price"]));
 	}
+	
+	await order_collection.updateOne({table_number: req.params.id, status: "ongoing"},{ $set: {item_name: list_name, quantity: list_quantity, price: list_price},});
 
-	await order_collection.updateOne({table_number: req.params.id, status: "ongoing"},{$set: {item_name: list_name, quantity: list_quantity, price: list_price},});
 	res.send({msg: `Update Order of Table ${req.params.id} Successfully!!!`});
 };
 

@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 ##################ORDER##############
 
-GET http://localhost:1500/api/view-order/2
+GET http://localhost:1500/api/view-order/5
 
 ###
 GET http://localhost:1500/api/orders
@@ -30,6 +30,11 @@ Content-Type: application/json
 [
 	{
 		"Name": "Nuoc dua",
+		"Price": 12.99,
+		"Quantity": 1
+	},
+		{
+		"Name": "Nuoc dua 2",
 		"Price": 12.99,
 		"Quantity": 1
 	}
