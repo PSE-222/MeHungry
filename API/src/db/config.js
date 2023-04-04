@@ -11,7 +11,6 @@ module.exports = {
       console.log("Cannot connect to database.");
       return;
     }
-	console.log("Connected to DB");
     return connect_db;
   },
 };

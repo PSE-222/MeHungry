@@ -5,8 +5,8 @@
 
 
 const db_object = require('../db/config');
-const { create_order, count_order } = require('../controllers/order_controller')
-const { create_payment } = require('../controllers/payment_controller')
+const { create_order, count_order } = require('./order_controller')
+const { create_payment } = require('./payment_controller')
 const table_collection = db_object.getDb().collection("Table")
 
 const status_arr =["free","requested","serving","checkout"]
@@ -40,15 +40,15 @@ exports.assign_table = async (req,res) =>{
 	if ( !table_info )
 		return res.status(404).send({msg: "Invalid Table Number"});
 		
-	if (table_info["status"] != 0)
+	if (table_info["status"] != 0){
+		console.log(table_info["status"])
 		return res.send({msg :"Invalid Table Assignment!!!"});
-
+	}
 	if (table_info["customer_name"] != "" ){
 		res.send({msg: "Table Is Being Occupied!!!"});
 		return;
 	}
 	await table_collection.updateOne({table_number: table_number}, {$set: {status: 1, customer_name: req.params.name}})
-	await create_order_and_payment(table_info["table_number"]);
 	const new_table_info = await table_collection.findOne({table_number: table_number},);
 
 	res.send(new_table_info);
@@ -56,7 +56,7 @@ exports.assign_table = async (req,res) =>{
 
 exports.checkout_table = async (req,res) =>{
 	const table_number = req.params.number;
-
+	
 	const table_info = await table_collection.findOne({table_number: table_number,});
 	if (!table_info){
 		res.status(404).send({msg: "Invalid Table Number"});
@@ -67,8 +67,11 @@ exports.checkout_table = async (req,res) =>{
 
 	if (table_info["customer_name"] == "" )
 		return res.send({msg: "Table Is Not Used!!!"});
+	const payment_details = req.body
+	const assoc_order = await db_object.getDb().collection("Order").findOne({table_number: table_number, status: "ongoing"});
 	
 	await table_collection.updateOne({table_number: table_number}, {$set: {status: 3}})
+	await db_object.getDb().collection("Payment").updateOne({id: assoc_order["order_id"]},{$set: payment_details})
 	return res.send({ msg: "Request checkout successfully"});
 }
 exports.change_status_table = async (req,res) => {
@@ -76,8 +79,8 @@ exports.change_status_table = async (req,res) => {
 	const table_info = await table_collection.findOne({table_number: table_number});
 	
 	if (!table_info){
-		res.status(404).send({msg: "Invalid Table Number"});
-		return;
+		return res.status(404).send({msg: "Invalid Table Number"});
+		
 	}
 
 	var table_status = table_info["status"];
@@ -87,10 +90,11 @@ exports.change_status_table = async (req,res) => {
 			return res.send({ msg: "Operation Is Invalid!!!" })
 		case 1:
 			await table_collection.updateOne({table_number: table_number},{$set: {status: 2}});
+			await create_order_and_payment(table_info["table_number"]);
 			break;
 		case 3:
 			await table_collection.updateOne({table_number: table_number},{$set: {status: 0, customer_name: ""}});
-			break;
+			return;
 	}
 	var new_status = status_arr[(table_status + 1) % 4]
 	return res.send({msg:`Change Status of Table ${table_number} to ${new_status}`});

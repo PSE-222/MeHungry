@@ -7,6 +7,7 @@
 // [ ] Finish order include change status (4 to 0)
 // [ ] Add name and check name for table
 const db_object = require('../db/config');
+const { change_status_table } = require('./table_controller')
 const order_collection = db_object.getDb().collection("Order")
 
 exports.create_order = async (order_id, table_number) => {
@@ -83,7 +84,10 @@ exports.finish_order = async (req,res) => {
 		return;
 	}
 
-	await order_collection.updateOne({order_id: req.params.id},{$set: {status: "finished",},});
+	await order_collection.updateOne({order_id: req.params.num},{$set: {status: "finished",},});
+	req.params.number = order_info["table_number"]
+	console.log(req.params.number)
+	await change_status_table(req,res);
 	res.send({msg: `Order ${req.params.id} is billed.`});
 	
 };

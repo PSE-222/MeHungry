@@ -44,23 +44,23 @@ Content-Type: application/json
 POST http://localhost:1500/api/finish-order/3
 
 #################TABLE###############
-POST http://localhost:1500/api/assign-table/1/ab
+POST http://localhost:1500/api/assign-table/2/ab
 
 ###
 
 POST http://localhost:1500/api/assign-table/2/bc
 
 ###
-POST http://localhost:1500/api/change-status/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDU4MDcwOSwiZXhwIjoxNjgwNjE2NzA5fQ.mQ_iLQzb8fj38F3sCYMe6n9KS6z_8rn5fCGsxyTFOkQ
+POST http://localhost:1500/api/change-status/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDYyNDAzMSwiZXhwIjoxNjgwNjYwMDMxfQ.0xKV3cwhJEjURVNKCYj2rtFIRksv66ii9k66fpOYssM
 ###
 GET http://localhost:1500/api/table/1qAKpsUL
 
 ###
-POST http://localhost:1500/api/request-table/1qAKpsUL
+POST http://localhost:1500/api/request-table/5WLK1rFw
 
 ###
-POST http://localhost:1500/api/request-checkout/1
+POST http://localhost:1500/api/request-checkout/2
 
 ###
 GET http://localhost:1500/api/table/2
