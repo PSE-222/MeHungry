@@ -32,7 +32,8 @@ exports.add_item_to_order = async (req,res) => {
 	// 	}
 	// 	list_quantity[index] += item["Quantity"];
 	// }
-	const current_order_info = await order_collection.findOne({table_number: req.params.id, status: "ongoing"});
+	const table_number = req.params.number;
+	const current_order_info = await order_collection.findOne({table_number: table_number, status: "ongoing"});
 	if (!current_order_info){
 		return res.send({ msg: "Order Not Existed!!"});
 	}
@@ -47,9 +48,9 @@ exports.add_item_to_order = async (req,res) => {
 		list_price.push(parseFloat(item["Price"]));
 	}
 	
-	await order_collection.updateOne({table_number: req.params.id, status: "ongoing"},{ $set: {item_name: list_name, quantity: list_quantity, price: list_price},});
+	await order_collection.updateOne({table_number: table_number, status: "ongoing"},{ $set: {item_name: list_name, quantity: list_quantity, price: list_price},});
 
-	res.send({msg: `Update Order of Table ${req.params.id} Successfully!!!`});
+	res.send({msg: `Update Order of Table ${table_number} Successfully!!!`});
 };
 
 exports.count_order = async () =>{
