@@ -24,9 +24,9 @@ exports.add_item_to_order = async (req,res) => {
 	// 	index = list_item.indexOf(item["Name"]);
 
 	// 	if (index == -1){
-	// 		list_item.append(item["Name"]);
-	// 		list_quantity.append(item["Quantity"]);
-	// 		list_price.append(item["Price"]);
+	// 		list_item.push(item["Name"]);
+	// 		list_quantity.push(item["Quantity"]);
+	// 		list_price.push(item["Price"]);
 	// 		continue;
 	// 	}
 	// 	list_quantity[index] += item["Quantity"];
@@ -40,9 +40,9 @@ exports.add_item_to_order = async (req,res) => {
 	list_quantity = [];
 	list_price = [];
 	for (item in list_of_item){
-		list_name.append(item["Name"]);
-		list_quantity.append(item["Quantity"]);
-		list_price.append(parseFloat(item["Price"]));
+		list_name.push(item["Name"]);
+		list_quantity.push(item["Quantity"]);
+		list_price.push(parseFloat(item["Price"]));
 	}
 
 	await order_collection.updateOne({table_number: req.params.id, status: "ongoing"},{$set: {item_name: list_name, quantity: list_quantity, price: list_price},});

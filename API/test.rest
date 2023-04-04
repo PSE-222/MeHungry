@@ -24,6 +24,18 @@ GET http://localhost:1500/api/orders
 GET http://localhost:1500/api/view-current-orders
 
 ###
+POST http://localhost:1500/api/add-items/5
+Content-Type: application/json
+
+[
+	{
+		"Name": "Nuoc dua",
+		"Price": 12.99,
+		"Quantity": 1
+	}
+]
+
+###
 POST http://localhost:1500/api/finish-order/3
 
 #################TABLE###############
