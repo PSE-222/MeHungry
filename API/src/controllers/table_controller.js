@@ -57,6 +57,23 @@ exports.assign_table = async (req,res) =>{
 	res.send(new_table_info);
 };
 
+exports.checkout_table = async (req,res) =>{
+	const table_number = req.params.number;
+
+	const table_info = await table_collection.findOne({table_number: table_number,});
+	if (!table_info){
+		res.status(404).send({msg: "Invalid Table Number"});
+		return;
+	}
+	if (table_info["status"] != 2)
+		return res.send({msg :"Invalid Table Checkout!!!"});
+
+	if (table_info["customer_name"] == "" )
+		return res.send({msg: "Table Is Not Used!!!"});
+	
+	await table_collection.updateOne({table_number: table_number}, {$set: {status: 3}})
+	return res.send({ msg: "Request checkout successfully"});
+}
 exports.change_status_table = async (req,res) => {
 	const table_number = req.params.number;
 	const table_info = await table_collection.findOne({table_number: table_number});
@@ -79,7 +96,7 @@ exports.change_status_table = async (req,res) => {
 			break;
 	}
 	var new_status = status_arr[(table_status + 1) % 4]
-	return res.send({msg:`Change Status of Table ${table_number} to ${new_status}}`});
+	return res.send({msg:`Change Status of Table ${table_number} to ${new_status}`});
 };
 
 exports.view_info_table = async (req,res) => {

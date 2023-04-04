@@ -35,7 +35,7 @@ POST http://localhost:1500/api/assign-table/2/bc
 
 ###
 POST http://localhost:1500/api/change-status/1
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDU4MDcwOSwiZXhwIjoxNjgwNjE2NzA5fQ.mQ_iLQzb8fj38F3sCYMe6n9KS6z_8rn5fCGsxyTFOkQ
 ###
 GET http://localhost:1500/api/table/1qAKpsUL
 
@@ -43,10 +43,13 @@ GET http://localhost:1500/api/table/1qAKpsUL
 POST http://localhost:1500/api/request-table/1qAKpsUL
 
 ###
+POST http://localhost:1500/api/request-checkout/1
+
+###
 GET http://localhost:1500/api/table/2
 ###
 GET http://localhost:1500/api/tables
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDU4MDcwOSwiZXhwIjoxNjgwNjE2NzA5fQ.mQ_iLQzb8fj38F3sCYMe6n9KS6z_8rn5fCGsxyTFOkQ
 ###############PAYMENT##############
 GET http://localhost:1500/api/view-payment/1
 
