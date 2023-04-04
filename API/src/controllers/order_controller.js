@@ -50,7 +50,7 @@ exports.add_item_to_order = async (req,res) => {
 	
 	await order_collection.updateOne({table_number: table_number, status: "ongoing"},{ $set: {item_name: list_name, quantity: list_quantity, price: list_price},});
 
-	res.send({msg: `Update Order of Table ${table_number} Successfully!!!`});
+	return res.send({msg: `Update Order of Table ${table_number} Successfully!!!`});
 };
 
 exports.count_order = async () =>{
