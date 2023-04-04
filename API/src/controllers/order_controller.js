@@ -60,12 +60,12 @@ exports.count_order = async () =>{
 
 exports.view_order = async (req,res) => {
 	const order_info = await order_collection.findOne({order_id: req.params.id});
-	res.send(order_info)
+	return res.send(order_info)
 };
 
 exports.view_current_orders = async (req,res) => {
 	const ongoing_order = await order_collection.find({status: "ongoing"}).toArray();
-	res.send(ongoing_order);
+	return res.send(ongoing_order);
 };
 
 exports.view_orders = async (req,res) => {
@@ -76,20 +76,20 @@ exports.view_orders = async (req,res) => {
 exports.finish_order = async (req,res) => {
 	const order_info = await order_collection.findOne({order_id: req.params.id});
 	if (!order_info){
-		res.send({msg: `Order not available`});
-		return;
+		return res.send({msg: `Order not available`});
+		
 	}
 
 	if (order_info["status"] != "ongoing"){
-		res.send({msg: `Order ${req.params.id} Has Finished!!!`});
-		return;
+		return res.send({msg: `Order ${req.params.id} Has Finished!!!`});
+		
 	}
 
 	await order_collection.updateOne({order_id: req.params.num},{$set: {status: "finished",},});
 	req.params.number = order_info["table_number"]
 	console.log(req.params.number)
 	await change_status_table(req,res);
-	res.send({msg: `Order ${req.params.id} is billed.`});
+	return res.send({msg: `Order ${req.params.id} is billed.`});
 	
 };
 

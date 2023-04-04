@@ -25,7 +25,7 @@ exports.add_item = async (req,res) =>{
 	item_info = Object.assign({},{item_id: new_id},item_info);
 	await menu_collection.insertOne(item_info);
 
-	res.send({msg: `Add Item ${item_info.item_name} Successfully!!!`});
+	return res.send({msg: `Add Item ${item_info.item_name} Successfully!!!`});
 };
 
 exports.update_item = async (req,res) => {
@@ -35,15 +35,15 @@ exports.update_item = async (req,res) => {
 		return res.send({ msg: "Item Not Existed"});
 	}
 	await menu_collection.updateOne({item_id: item_info.item_id},{$set: item_info});
-	res.send({msg: `Update Item ${item_info.item_name} Successfully!!!`});
+	return res.send({msg: `Update Item ${item_info.item_name} Successfully!!!`});
 };
 
 exports.delete_item = async (req,res) => {
 	await menu_collection.deleteOne({item_id: req.params.id});
-	res.send({msg: `Delete Item Successfully`});
+	return res.send({msg: `Delete Item Successfully`});
 };
 
 exports.view_menu = async (req,res) => {
 	const menu = await menu_collection.find({}).toArray();
-	res.send(menu);
+	return res.send(menu);
 };

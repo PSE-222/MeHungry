@@ -43,14 +43,14 @@ exports.login = async (req, res) => {
     refreshTokens.push(refresh_token);
     console.log({ refreshTokens });
 
-    res.send({ accessToken: access_token, refreshToken: refresh_token });
+    return res.send({ accessToken: access_token, refreshToken: refresh_token });
 };
 
 
 exports.logout = async (req, res) => {
     refreshTokens = refreshTokens.filter((token) => token !== req.body.refreshToken);
     // console.log("refreshTokens array after filtering: ", refreshTokens);
-    res.status(200).send({ msg: "Logout Successfully!!!" });
+    return res.status(200).send({ msg: "Logout Successfully!!!" });
 };
 
 exports.generate_new_access_token = async (req, res) => {

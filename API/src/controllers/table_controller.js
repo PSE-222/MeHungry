@@ -78,10 +78,9 @@ exports.change_status_table = async (req,res) => {
 	const table_number = req.params.number;
 	const table_info = await table_collection.findOne({table_number: table_number});
 	
-	if (!table_info){
+	if (!table_info)
 		return res.status(404).send({msg: "Invalid Table Number"});
-		
-	}
+
 
 	var table_status = table_info["status"];
 	switch(table_status){
@@ -107,10 +106,10 @@ exports.view_info_table = async (req,res) => {
 		res.status(404).send({msg: "Invalid Table ID"});
 		return;
 	}
-	res.send(table_info);
+	return res.send(table_info);
 };
 
 exports.view_all_table = async (req,res) => {
 	const all_table_info = await table_collection.find({}).toArray();
-	res.send(all_table_info)
+	return res.send(all_table_info);
 };
