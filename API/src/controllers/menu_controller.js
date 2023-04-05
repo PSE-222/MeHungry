@@ -47,3 +47,12 @@ exports.view_menu = async (req,res) => {
 	const menu = await menu_collection.find({}).toArray();
 	return res.send(menu);
 };
+
+exports.view_item = async (req,res) => {
+	const item_id = req.params.id;
+	const item_info = await menu_collection.findOne({item_id: item_id});
+	if (!item_info){
+		return res.send({ msg: "Item Not Existed"});
+	}
+	return res.send(item_info);
+}

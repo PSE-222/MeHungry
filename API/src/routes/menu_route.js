@@ -11,6 +11,8 @@ router.post("/update-item", auth, menu_controller.update_item);
 
 router.post("/delete-item/:id", auth, menu_controller.delete_item);
 
+router.get("/view-item/:id", auth, menu_controller.view_item);
+
 router.get("/menu", menu_controller.view_menu);
 
 module.exports = router;

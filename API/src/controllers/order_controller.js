@@ -18,6 +18,7 @@ exports.create_order = async (order_id, table_number) => {
 exports.add_item_to_order = async (req,res) => {
 
 	const table_number = req.params.number;
+	console.log(table_number);
 	const current_order_info = await order_collection.findOne({table_number: table_number, status: "ongoing"});
 	if (!current_order_info){
 		return res.send({ msg: "Order Not Existed!!"});
