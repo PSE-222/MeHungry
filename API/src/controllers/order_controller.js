@@ -16,40 +16,39 @@ exports.create_order = async (order_id, table_number) => {
 }
 
 exports.add_item_to_order = async (req,res) => {
-	// let list_item = current_order_info["item_name"];
-	// let list_quantity = current_order_info["quantity"];
-	// let list_price = current_order_info["price"];
 
-	// const list_of_item = req.body;
-	// for (item in list_of_item){
-	// 	index = list_item.indexOf(item["Name"]);
-
-	// 	if (index == -1){
-	// 		list_item.push(item["Name"]);
-	// 		list_quantity.push(item["Quantity"]);
-	// 		list_price.push(item["Price"]);
-	// 		continue;
-	// 	}
-	// 	list_quantity[index] += item["Quantity"];
-	// }
 	const table_number = req.params.number;
 	const current_order_info = await order_collection.findOne({table_number: table_number, status: "ongoing"});
 	if (!current_order_info){
 		return res.send({ msg: "Order Not Existed!!"});
 	}
-	list_of_item = req.body;
 
-	let list_name = [],	list_quantity = [],	list_price = [];
+	let list_name = current_order_info["item_name"], list_quantity = current_order_info["quantity"];
+	let list_price = current_order_info["price"];
+	const list_of_item = req.body;
 
-	for (i = 0; i < list_of_item.length; i++) {
-		item = list_of_item[i];
-		list_name.push(item["Name"]);
-		list_quantity.push(item["Quantity"]);
-		list_price.push(parseFloat(item["Price"]));
+	for (i = 0; i < list_of_item.length; i++){
+		let item = list_of_item[i];
+		index = list_name.indexOf(item["Name"]);
+
+		if (index == -1){
+			list_name.push(item["Name"]);
+			list_quantity.push(item["Quantity"]);
+			list_price.push(item["Price"]);
+			continue;
+		}
+		list_quantity[index] += item["Quantity"];
 	}
+	// let list_name = [],	list_quantity = [],	list_price = [];
+
+	// for (i = 0; i < list_of_item.length; i++) {
+	// 	item = list_of_item[i];
+	// 	list_name.push(item["Name"]);
+	// 	list_quantity.push(item["Quantity"]);
+	// 	list_price.push(parseFloat(item["Price"]));
+	// }
 	
 	await order_collection.updateOne({table_number: table_number, status: "ongoing"},{ $set: {item_name: list_name, quantity: list_quantity, price: list_price},});
-
 	return res.send({msg: `Update Order of Table ${table_number} Successfully!!!`});
 };
 

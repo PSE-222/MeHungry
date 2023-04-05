@@ -10,7 +10,7 @@ const { create_payment } = require('./payment_controller')
 const table_collection = db_object.getDb().collection("Table")
 
 const status_arr =["free","requested","serving","checkout"]
-var pending_list = Array(16).fill("");
+
 async function create_order_and_payment (table_number){
 	const new_order_id = (await count_order() + 1).toString();
 	await create_order(new_order_id, table_number);
@@ -20,10 +20,9 @@ exports.request_table = async (req,res) =>{
 	const table_id = req.params.id;
 	const table_info = await table_collection.findOne({table_id: table_id,});
 	
-	if ( !table_info ){
+	if ( !table_info )
 		return res.status(404).send({msg: "Invalid Table Number"});
 
-	}
 	if ( table_info["status"] != 0 || table_info["status"] != 1 )
 		return res.send({msg :"Table Is Not Available!!"});
 
@@ -44,14 +43,14 @@ exports.assign_table = async (req,res) =>{
 		console.log(table_info["status"])
 		return res.send({msg :"Invalid Table Assignment!!!"});
 	}
-	if (table_info["customer_name"] != "" ){
-		res.send({msg: "Table Is Being Occupied!!!"});
-		return;
-	}
+
+	if (table_info["customer_name"] != "" )
+		return res.send({msg: "Table Is Being Occupied!!!"});
+
 	await table_collection.updateOne({table_number: table_number}, {$set: {status: 1, customer_name: req.params.name}})
 	const new_table_info = await table_collection.findOne({table_number: table_number},);
 
-	res.send(new_table_info);
+	return res.send(new_table_info);
 };
 
 exports.checkout_table = async (req,res) =>{

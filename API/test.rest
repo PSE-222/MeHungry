@@ -24,20 +24,20 @@ GET http://localhost:1500/api/orders
 GET http://localhost:1500/api/view-current-orders
 
 ###
-POST http://localhost:1500/api/add-items/1
+POST http://localhost:1500/api/add-items/3
 Content-Type: application/json
 
 [
-	{
-		"Name": "Nuoc dua",
-		"Price": 12.99,
-		"Quantity": 1
-	},
-		{
-		"Name": "Nuoc dua 2",
-		"Price": 12.99,
-		"Quantity": 1
-	}
+    {
+        "Name": "Caesar2 Salad",
+        "Quantity": 4,
+        "Price": 10.99
+    },
+    {
+        "Name": "Nuoc dua",
+        "Quantity": 1,
+        "Price": 12.99
+    }
 ]
 
 ###
@@ -51,8 +51,8 @@ POST http://localhost:1500/api/assign-table/2/ab
 POST http://localhost:1500/api/assign-table/2/bc
 
 ###
-POST http://localhost:1500/api/change-status/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDYyNDAzMSwiZXhwIjoxNjgwNjYwMDMxfQ.0xKV3cwhJEjURVNKCYj2rtFIRksv66ii9k66fpOYssM
+POST http://localhost:1500/api/change-status/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDYyODAyMiwiZXhwIjoxNjgwNjY0MDIyfQ.p4OB_emLm_MelShGY5iItJKE4E1uaNCALfYZ8ZZNObQ
 ###
 GET http://localhost:1500/api/table/1qAKpsUL
 
@@ -60,7 +60,7 @@ GET http://localhost:1500/api/table/1qAKpsUL
 POST http://localhost:1500/api/request-table/5WLK1rFw
 
 ###
-POST http://localhost:1500/api/request-checkout/2
+POST http://localhost:1500/api/request-checkout/1
 
 ###
 GET http://localhost:1500/api/table/2
