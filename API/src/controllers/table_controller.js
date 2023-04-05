@@ -24,7 +24,7 @@ exports.request_table = async (req,res) =>{
 		return res.status(404).send({msg: "Invalid Table Number"});
 
 	if ( table_info["status"] == 2 || table_info["status"] == 3 )
-		return res.send({msg :"Table Is Not Available!!"});
+		return res.send({status: table_info["status"], msg :"Table Is Not Available!!"});
 
 	// await table_collection.updateOne({table_id: table_id}, {$set: {status: 1}})
 	// const new_table_info = await table_collection.findOne({table_id: table_id},);
