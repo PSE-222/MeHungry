@@ -30,11 +30,11 @@ exports.add_item = async (req,res) =>{
 
 exports.update_item = async (req,res) => {
 	const item_info = req.body;
-	const item_check = await menu_collection.findOne({item_name: item_info["item_name"]})
+	const item_check = await menu_collection.findOne({item_id: item_info["item_id"]})
 	if (!item_check){
 		return res.send({ msg: "Item Not Existed"});
 	}
-	await menu_collection.updateOne({item_id: item_info.item_id},{$set: item_info});
+	await menu_collection.updateOne({item_id: item_info["item_id"]},{$set: item_info});
 	return res.send({msg: `Update Item ${item_info.item_name} Successfully!!!`});
 };
 
