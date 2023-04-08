@@ -90,7 +90,7 @@ exports.change_status_table = async (table_number) =>{
 			break;
 		case 3:
 			await table_collection.updateOne({table_number: table_number},{$set: {status: 0, customer_name: ""}});
-			return;
+			break;
 	}
 	var new_status = status_arr[(table_status + 1) % 4]
 	return {status: 200, msg:`Change Status of Table ${table_number} to ${new_status}`};
