@@ -10,7 +10,7 @@ router.post("/assign-table/:number/:name", table_controller.assign_table);
 
 router.post("/request-checkout/:number", table_controller.checkout_table);
 
-router.post("/change-status/:number", auth, table_controller.change_status_table);
+router.post("/change-status/:number", auth, table_controller.update_status);
 
 // router.get("/table/:id", table_controller.view_info_table);
 

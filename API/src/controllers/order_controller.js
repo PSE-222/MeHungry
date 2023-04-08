@@ -86,9 +86,7 @@ exports.finish_order = async (req,res) => {
 	}
 
 	await order_collection.updateOne({order_id: req.params.num},{$set: {status: "finished",},});
-	req.params.number = order_info["table_number"]
-	console.log(req.params.number)
-	await change_status_table(req,res);
+	await change_status_table(order_info["table_number"]);
 	return res.send({msg: `Order ${req.params.id} is billed.`});
 	
 };

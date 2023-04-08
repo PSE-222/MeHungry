@@ -13,6 +13,9 @@ Content-Type: application/json
     "is_available": true,
     "category": "drink"
 }
+###
+GET http://localhost:1500/api/view-item/838x45um
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYUFiQmNDZEQiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY4MDcwOTU5NSwiZXhwIjoxNjgwNzQ1NTk1fQ.titMRFF8STMC4F6F5baDBpJDTGQI8ykhRcgux7-XIJ8
 ##################ORDER##############
 
 GET http://localhost:1500/api/view-order/5
