@@ -77,12 +77,10 @@ exports.finish_order = async (req,res) => {
 	const order_info = await order_collection.findOne({order_id: req.params.id});
 	if (!order_info){
 		return res.send({msg: `Order not available`});
-		
 	}
 
 	if (order_info["status"] != "ongoing"){
 		return res.send({msg: `Order ${req.params.id} Has Finished!!!`});
-		
 	}
 
 	await order_collection.updateOne({order_id: req.params.num},{$set: {status: "finished",},});

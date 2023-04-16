@@ -27,19 +27,39 @@ GET http://localhost:1500/api/orders
 GET http://localhost:1500/api/view-current-orders
 
 ###
-POST http://localhost:1500/api/add-items/3
+POST http://localhost:1500/api/add-items/15
 Content-Type: application/json
 
 [
     {
         "Name": "Caesar2 Salad",
-        "Quantity": 4,
+        "Quantity": 2,
         "Price": 10.99
     },
     {
         "Name": "Nuoc dua",
-        "Quantity": 1,
+        "Quantity": 5,
         "Price": 12.99
+    },
+    {
+        "Name": "Banh bao",
+        "Quantity": 1,
+        "Price": 10.99
+    },
+    {
+        "Name": "Chicken Alfredo",
+        "Quantity": 5,
+        "Price": 12.99
+    },
+	{
+        "Name": "Nuoc mia",
+        "Quantity": 2,
+        "Price": 15.99
+    },
+    {
+        "Name": "Banh bao nhan ngot",
+        "Quantity": 8,
+        "Price": 13.99
     }
 ]
 
@@ -63,8 +83,14 @@ GET http://localhost:1500/api/table/1qAKpsUL
 POST http://localhost:1500/api/request-table/5WLK1rFw
 
 ###
-POST http://localhost:1500/api/request-checkout/11
+POST http://localhost:1500/api/request-checkout/4
+Content-Type: application/json
 
+{
+	"method": "cash",
+	"tip": 10.0,
+	"total": 20.0	
+}
 ###
 GET http://localhost:1500/api/table/2
 ###

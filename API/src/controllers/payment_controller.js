@@ -39,8 +39,10 @@ exports.finish_payment = async (req,res) => {
 		res.send({msg: "Invalid Operation!"});
 		return;
 	}
-
+	req.body["tip"] = float(req.body["tip"])
+	req.body["total"] = float(req.body["total"]) + req.body["tip"]
 	const payment_details = Object.assign({}, req.body, {status: "done"});
+
 	await payment_collection.updateOne({id: payment_id},{$set: payment_details,});
 	res.send({msg:"Payment is done!!!"});
 };

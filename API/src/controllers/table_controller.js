@@ -66,7 +66,9 @@ exports.checkout_table = async (req,res) =>{
 
 	if (table_info["customer_name"] == "" )
 		return res.send({msg: "Table Is Not Used!!!"});
-	const payment_details = req.body
+	let payment_details = req.body
+	payment_details["tip"] = parseFloat(payment_details["tip"])
+	payment_details["total"] = parseFloat(payment_details["total"]) + payment_details["tip"]
 	const assoc_order = await db_object.getDb().collection("Order").findOne({table_number: table_number, status: "ongoing"});
 	
 	await table_collection.updateOne({table_number: table_number}, {$set: {status: 3}})
@@ -83,7 +85,7 @@ exports.change_status_table = async (table_number) =>{
 	switch(table_status){
 		case 0:
 		case 2:
-			return res.send({status: 404, msg: "Operation Is Invalid!!!" })
+			return {status: 404, msg: "Operation Is Invalid!!!" }
 		case 1:
 			await table_collection.updateOne({table_number: table_number},{$set: {status: 2}});
 			await create_order_and_payment(table_info["table_number"]);
